@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<modules xmlns:da="http://dotaddict.org/da/">
+  <module id="myUrlHandlers">
+    <name>My URL handlers</name>
+    <version>2022.11.26</version>
+    <author>Alex Pirine and contributors</author>
+    <desc>Change Dotclear URL handlers</desc>
+    <file>https://github.com/JcDenis/myUrlHandlers/releases/download/v2022.11.26/plugin-myUrlHandlers.zip</file>
+    <da:dcmin>2.24</da:dcmin>
+    <da:details>http://plugins.dotaddict.org/dc2/details/myUrlHandlers</da:details>
+    <da:support>http://forum.dotclear.org/viewforum.php?id=16</da:support>
+  </module>
+</modules>

@@ -1,31 +1,33 @@
 <?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of My URL handlers, a plugin for Dotclear.
-# 
-# Copyright (c) 2007-2015 Alex Pirine
-# <alex pirine.fr>
-# 
-# Licensed under the GPL version 2.0 license.
-# A copy is available in LICENSE file or at
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# -- END LICENSE BLOCK ------------------------------------
-
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
-
-$_menu['Blog']->addItem(__('URL handlers'),'plugin.php?p=myUrlHandlers',
-    'index.php?pf=myUrlHandlers/icon.png',
-    preg_match('/plugin.php\?p=myUrlHandlers$/',$_SERVER['REQUEST_URI']),
-    dcCore::app()->auth->check('contentadmin',dcCore::app()->blog->id));
-
-dcCore::app()->addBehavior('adminDashboardFavorites','myUrlHandlersDashboardFavorites');
-
-function myUrlHandlersDashboardFavorites($core,$favs)
-{
-    $favs->register('myUrlHandlers', array(
-        'title' => __('URL handlers'),
-        'url' => 'plugin.php?p=myUrlHandlers',
-        'small-icon' => 'index.php?pf=myUrlHandlers/icon.png',
-        'large-icon' => 'index.php?pf=myUrlHandlers/icon-big.png',
-        'permissions' => 'contentadmin'
-    ));
+/**
+ * @brief myUrlHandlers, a plugin for Dotclear 2
+ *
+ * @package Dotclear
+ * @subpackage Plugin
+ *
+ * @author Alex Pirine and contributors
+ *
+ * @copyright Jean-Christian Denis
+ * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
+ */
+if (!defined('DC_CONTEXT_ADMIN')) {
+    return;
 }
+
+dcCore::app()->menu[dcAdmin::MENU_PLUGINS]->addItem(
+    __('URL handlers'),
+    dcCore::app()->adminurl->get('admin.plugin.myUrlHandlers'),
+    dcPage::getPF('myUrlHandlers/icon.png'),
+    preg_match('/' . preg_quote(dcCore::app()->adminurl->get('admin.plugin.myUrlHandlers')) . '(&.*)?$/', $_SERVER['REQUEST_URI']),
+    dcCore::app()->auth->check(dcAuth::PERMISSION_CONTENT_ADMIN, dcCore::app()->blog->id)
+);
+
+dcCore::app()->addBehavior('adminDashboardFavoritesV2', function ($favs) {
+    $favs->register('myUrlHandlers', [
+        'title'       => __('URL handlers'),
+        'url'         => dcCore::app()->adminurl->get('admin.plugin.myUrlHandlers'),
+        'small-icon'  => dcPage::getPF('myUrlHandlers/icon.png'),
+        'large-icon'  => dcPage::getPF('myUrlHandlers/icon-big.png'),
+        'permissions' => dcAuth::PERMISSION_CONTENT_ADMIN,
+    ]);
+});

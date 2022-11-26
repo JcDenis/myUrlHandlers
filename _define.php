@@ -1,28 +1,31 @@
 <?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of My URL handlers, a plugin for Dotclear.
-# 
-# Copyright (c) 2007-2015 Alex Pirine
-# <alex pirine.fr>
-# 
-# Licensed under the GPL version 2.0 license.
-# A copy is available in LICENSE file or at
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# -- END LICENSE BLOCK ------------------------------------
-
-if (!defined('DC_RC_PATH')) { return; }
+/**
+ * @brief myUrlHandlers, a plugin for Dotclear 2
+ *
+ * @package Dotclear
+ * @subpackage Plugin
+ *
+ * @author Alex Pirine and contributors
+ *
+ * @copyright Jean-Christian Denis
+ * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
+ */
+if (!defined('DC_RC_PATH')) {
+    return null;
+}
 
 $this->registerModule(
-    'My URL handlers',              // Name
-    'Change Dotclear URL handlers', // Description
-    'Alex Pirine and contributors', // Author
-    '2022.08',                      // Version
+    'My URL handlers',
+    'Change Dotclear URL handlers',
+    'Alex Pirine and contributors',
+    '2022.11.26',
     [
-        'permissions' => 'contentadmin',
+        'requires'    => [['core', '2.24']],
+        'permissions' => dcAuth::PERMISSION_CONTENT_ADMIN,
         'priority'    => 150000,
         'type'        => 'plugin',
-        'dc_min'      => '2.7',
         'support'     => 'http://forum.dotclear.org/viewforum.php?id=16',
-        'details'     => 'http://plugins.dotaddict.org/dc2/details/myUrlHandlers'
+        'details'     => 'http://plugins.dotaddict.org/dc2/details/myUrlHandlers',
+        'repository'  => 'https://raw.githubusercontent.com/JcDenis/myUrlHandlers/master/dcstore.xml',
     ]
 );

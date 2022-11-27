@@ -12,9 +12,6 @@
  */
 class myUrlHandlers
 {
-    private $sets;
-    private $handlers = [];
-
     private static $defaults     = [];
     private static $url2post     = [];
     private static $post_adm_url = [];

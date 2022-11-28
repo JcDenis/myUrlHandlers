@@ -24,7 +24,7 @@ $this->registerModule(
         'permissions' => dcAuth::PERMISSION_CONTENT_ADMIN,
         'priority'    => 150000,
         'type'        => 'plugin',
-        'support'     => 'http://forum.dotclear.org/viewforum.php?id=16',
+        'support'     => 'https://github.com/JcDenis/myUrlHandlers',
         'details'     => 'http://plugins.dotaddict.org/dc2/details/myUrlHandlers',
         'repository'  => 'https://raw.githubusercontent.com/JcDenis/myUrlHandlers/master/dcstore.xml',
     ]

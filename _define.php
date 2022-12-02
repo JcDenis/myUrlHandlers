@@ -21,7 +21,9 @@ $this->registerModule(
     '2022.11.26',
     [
         'requires'    => [['core', '2.24']],
-        'permissions' => dcAuth::PERMISSION_CONTENT_ADMIN,
+        'permissions' => dcCore::app()->auth->makePermissions([
+            dcAuth::PERMISSION_CONTENT_ADMIN,
+        ]),
         'priority'    => 150000,
         'type'        => 'plugin',
         'support'     => 'https://github.com/JcDenis/myUrlHandlers',

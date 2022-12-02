@@ -19,7 +19,7 @@ dcCore::app()->menu[dcAdmin::MENU_PLUGINS]->addItem(
     dcCore::app()->adminurl->get('admin.plugin.myUrlHandlers'),
     dcPage::getPF('myUrlHandlers/icon.png'),
     preg_match('/' . preg_quote(dcCore::app()->adminurl->get('admin.plugin.myUrlHandlers')) . '(&.*)?$/', $_SERVER['REQUEST_URI']),
-    dcCore::app()->auth->check(dcAuth::PERMISSION_CONTENT_ADMIN, dcCore::app()->blog->id)
+    dcCore::app()->auth->check(dcCore::app()->auth->makePermissions([dcAuth::PERMISSION_CONTENT_ADMIN]), dcCore::app()->blog->id)
 );
 
 dcCore::app()->addBehavior('adminDashboardFavoritesV2', function ($favs) {
@@ -28,6 +28,6 @@ dcCore::app()->addBehavior('adminDashboardFavoritesV2', function ($favs) {
         'url'         => dcCore::app()->adminurl->get('admin.plugin.myUrlHandlers'),
         'small-icon'  => dcPage::getPF('myUrlHandlers/icon.png'),
         'large-icon'  => dcPage::getPF('myUrlHandlers/icon-big.png'),
-        'permissions' => dcAuth::PERMISSION_CONTENT_ADMIN,
+        'permissions' => dcCore::app()->auth->makePermissions([dcAuth::PERMISSION_CONTENT_ADMIN]),
     ]);
 });

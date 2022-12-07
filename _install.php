@@ -14,14 +14,15 @@ if (!defined('DC_RC_PATH')) {
     return null;
 }
 
-$label       = basename(__DIR__);
-$new_version = dcCore::app()->plugins->moduleInfo($label, 'version');
-
-if (version_compare(dcCore::app()->getVersion($label), $new_version, '>=')) {
-    return;
-}
-
 try {
+    if (version_compare(
+        dcCore::app()->getVersion(basename(__DIR__)),
+        dcCore::app()->plugins->moduleInfo(basename(__DIR__), 'version'),
+        '>='
+    )) {
+        return null;
+    }
+
     dcCore::app()->blog->settings->addNamespace('myurlhandlers');
     dcCore::app()->blog->settings->myurlhandlers->put(
         'url_handlers',
@@ -30,7 +31,6 @@ try {
         'Personalized URL handlers',
         false
     );
-    dcCore::app()->setVersion($label, $new_version);
 
     return true;
 } catch (Exception $e) {

@@ -16,8 +16,6 @@ if (!defined('DC_CONTEXT_ADMIN')) {
 
 dcPage::check(dcCore::app()->auth->makePermissions([dcAuth::PERMISSION_CONTENT_ADMIN]));
 
-$page_title = __('URL handlers');
-
 try {
     # Read default handlers
     $handlers = myUrlHandlers::getDefaults();
@@ -39,7 +37,7 @@ try {
 
             if (empty($handlers[$name])) {
                 throw new Exception(sprintf(
-                    __('Handler "%s" doesn\'t exist.'),
+                    __('Uknown handler "%s".'),
                     html::escapeHTML($name)
                 ));
             }
@@ -101,43 +99,54 @@ try {
 
 ?>
 <html><head>
-<title><?php echo $page_title; ?></title>
+<title><?php echo __('URL handlers'); ?></title>
 </head><body>
 <?php
 
-    echo dcPage::breadcrumb(
-        [
-            html::escapeHTML(dcCore::app()->blog->name)           => '',
-            '<span class="page-title">' . $page_title . '</span>' => '',
-        ]
-    ) .
-    dcPage::notices();
+echo
+dcPage::breadcrumb(
+    [
+        html::escapeHTML(dcCore::app()->blog->name) => '',
+        __('URL handlers')                          => '',
+    ]
+) .
+dcPage::notices();
 
-?>
-
-<?php if (empty($handlers)): ?>
-<p class="message"><?php echo __('No URL handler to configure.'); ?></p>
-<?php else: ?>
-<p><?php echo __('You can write your own URL for each handler of this list.'); ?></p>
-<form action="<?php echo dcCore::app()->admin->getPageURL(); ?>" method="post">
-<table>
-  <thead>
-    <tr><th>Type</th><th>URL</th></tr>
-  </thead>
-  <tbody>
-<?php
-foreach ($handlers as $name => $url) {
+if (empty($handlers)) {
+    echo 
+    '<p class="message">' . __('No URL handler to configure.') . '</p>';
+} else {
     echo
-    '<tr><td>' . html::escapeHTML($name) . '</td><td>' .
-    form::field(['handlers[' . $name . ']'], 20, 255, html::escapeHTML($url)) .
-    '</td></tr>' . "\n";
+    '<form action="' . dcCore::app()->admin->getPageURL() . '" method="post">' .
+    '<div class="table-outer">' .
+    '<table>' .
+    '<caption>' . __('URL handlers list') . '</caption>' .
+    '<thead>' .
+    '<tr>' .
+    '<th class="nowrap" scope="col">' . __('Type') . '</th>' .
+    '<th class="nowrap" scope="col">' . __('URL') . '</th>' .
+    '</tr>' .
+    '</thead>' .
+    '<tbody>';
+
+    foreach ($handlers as $name => $url) {
+        echo
+        '<tr class="line">' .
+        '<td class="nowrap minimal">' . html::escapeHTML($name) . '</td>' .
+        '<td>' .
+            form::field(['handlers[' . $name . ']'], 20, 255, html::escapeHTML($url)) .
+        '</td>'.
+        '</tr>';
+    }
+
+    echo 
+    '</tbody></table></div>' .
+    '<p class="form-note">' . __('You can write your own URL for each handler of this list.') . '</p>' .
+    '<p>' .
+    '<input type="submit" name="act_save" value="' . __('Save') . '" /> ' .
+    '<input class="delete" type="submit" name="act_restore" value="' . __('Reset') . '" />' .
+    dcCore::app()->formNonce() . '</p>' .
+    '</form>';
 }
-    ?>
-</tbody>
-</table>
-<p><input type="submit" name="act_save" value="<?php echo __('Save'); ?>" />
-    <input type="submit" name="act_restore" value="<?php echo __('Reset'); ?>" />
-    <?php echo dcCore::app()->formNonce(); ?></p>
-</form>
-<?php endif; ?>
+?>
 </body></html>

@@ -15,10 +15,9 @@ if (!defined('DC_RC_PATH')) {
 }
 
 try {
-    if (version_compare(
-        dcCore::app()->getVersion(basename(__DIR__)),
-        dcCore::app()->plugins->moduleInfo(basename(__DIR__), 'version'),
-        '>='
+    if (!dcCore::app()->newVersion(
+        basename(__DIR__), 
+        dcCore::app()->plugins->moduleInfo(basename(__DIR__), 'version')
     )) {
         return null;
     }

@@ -10,10 +10,29 @@
  * @copyright Jean-Christian Denis
  * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
-if (!defined('DC_RC_PATH')) {
-    return null;
+declare(strict_types=1);
+
+namespace Dotclear\Plugin\myUrlHandlers;
+
+use dcNsProcess;
+
+class Prepend extends dcNsProcess
+{
+    public static function init(): bool
+    {
+        self::$init = true;
+
+        return self::$init;
+    }
+
+    public static function process(): bool
+    {
+        if (!self::$init) {
+            return false;
+        }
+
+        MyUrlHandlers::init();
+
+        return true;
+    }
 }
-
-Clearbricks::lib()->autoload(['myUrlHandlers' => __DIR__ . '/inc/class.myurlhandlers.php']);
-
-myUrlHandlers::init();

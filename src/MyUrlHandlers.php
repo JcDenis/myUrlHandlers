@@ -10,13 +10,19 @@
  * @copyright Jean-Christian Denis
  * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
-class myUrlHandlers
+declare(strict_types=1);
+
+namespace Dotclear\Plugin\myUrlHandlers;
+
+use dcCore;
+
+class MyUrlHandlers
 {
     private static $defaults     = [];
     private static $url2post     = [];
     private static $post_adm_url = [];
 
-    public static function init()
+    public static function init(): void
     {
         # Set defaults
         foreach (dcCore::app()->url->getTypes() as $k => $v) {
@@ -39,13 +45,12 @@ class myUrlHandlers
         }
 
         # Read user settings
-        $handlers = (array) @unserialize(dcCore::app()->blog->settings->myurlhandlers->url_handlers);
-        foreach ($handlers as $name => $url) {
+        foreach (self::getBlogHandlers() as $name => $url) {
             self::overrideHandler($name, $url);
         }
     }
 
-    public static function overrideHandler($name, $url)
+    public static function overrideHandler(string $name, string $url): void
     {
         if (!isset(self::$defaults[$name])) {
             return;
@@ -65,7 +70,7 @@ class myUrlHandlers
         }
     }
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         $res = [];
         foreach (self::$defaults as $k => $v) {
@@ -73,5 +78,18 @@ class myUrlHandlers
         }
 
         return $res;
+    }
+
+    public static function getBlogHandlers(): array
+    {
+        $handlers = json_decode((string) dcCore::app()->blog->settings->get(My::id())->get(My::NS_SETTING_ID), true);
+
+        return is_array($handlers) ? $handlers : [];
+    }
+
+    public static function saveBlogHandlers(array $handlers): void
+    {
+        dcCore::app()->blog->settings->get(My::id())->put(My::NS_SETTING_ID, json_encode($handlers));
+        dcCore::app()->blog->triggerBlog();
     }
 }

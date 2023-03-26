@@ -30,20 +30,19 @@ class Manage extends dcNsProcess
 {
     public static function init(): bool
     {
-        if (defined('DC_CONTEXT_ADMIN')) {
-            dcPage::check(dcCore::app()->auth->makePermissions([
-                dcAuth::PERMISSION_CONTENT_ADMIN,
-            ]));
+        static::$init = defined('DC_CONTEXT_ADMIN')
+            && dcCore:app()->auth->check(
+                dcCore::app()->auth->makePermissions([
+                    dcAuth::PERMISSION_CONTENT_ADMIN,
+                ]), dcCore::app()->blog->id
+            );
 
-            self::$init = true;
-        }
-
-        return self::$init;
+        return static::$init;
     }
 
     public static function process(): bool
     {
-        if (!self::$init) {
+        if (!static::$init) {
             return false;
         }
 
@@ -117,7 +116,7 @@ class Manage extends dcNsProcess
 
     public static function render(): void
     {
-        if (!self::$init) {
+        if (!static::$init) {
             return;
         }
 

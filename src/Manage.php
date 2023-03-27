@@ -18,10 +18,10 @@ use dcAuth;
 use dcCore;
 use dcNsProcess;
 use dcPage;
+use Dotclear\Helper\Html\Form\Input;
+use Dotclear\Helper\Html\Html;
+use Dotclear\Helper\Text;
 use Exception;
-use form;
-use html;
-use text;
 
 /**
  * Manage contributions list
@@ -31,7 +31,7 @@ class Manage extends dcNsProcess
     public static function init(): bool
     {
         static::$init = defined('DC_CONTEXT_ADMIN')
-            && dcCore:app()->auth->check(
+            && dcCore::app()->auth->check(
                 dcCore::app()->auth->makePermissions([
                     dcAuth::PERMISSION_CONTENT_ADMIN,
                 ]), dcCore::app()->blog->id
@@ -51,19 +51,19 @@ class Manage extends dcNsProcess
 
             if (!empty($_POST['handlers']) && is_array($_POST['handlers'])) {
                 foreach ($_POST['handlers'] as $name => $url) {
-                    $url = text::tidyURL($url);
+                    $url = Text::tidyURL($url);
 
                     if (empty($handlers[$name])) {
                         throw new Exception(sprintf(
                             __('Uknown handler "%s".'),
-                            html::escapeHTML($name)
+                            Html::escapeHTML($name)
                         ));
                     }
 
                     if (empty($url)) {
                         throw new Exception(sprintf(
                             __('Invalid URL for handler "%s".'),
-                            html::escapeHTML($name)
+                            Html::escapeHTML($name)
                         ));
                     }
 
@@ -127,7 +127,7 @@ class Manage extends dcNsProcess
         echo
         dcPage::breadcrumb(
             [
-                html::escapeHTML(dcCore::app()->blog->name) => '',
+                Html::escapeHTML(dcCore::app()->blog->name) => '',
                 My::name()                                  => '',
             ]
         ) .
@@ -153,9 +153,9 @@ class Manage extends dcNsProcess
             foreach ($handlers as $name => $url) {
                 echo
                 '<tr class="line">' .
-                '<td class="nowrap minimal">' . html::escapeHTML($name) . '</td>' .
+                '<td class="nowrap minimal">' . Html::escapeHTML($name) . '</td>' .
                 '<td>' .
-                    form::field(['handlers[' . $name . ']'], 20, 255, html::escapeHTML($url)) .
+                    (new Input(['handlers[' . $name . ']']))->size(20)->maxlenght(255)->value(Html::escapeHTML($url))->render() .
                 '</td>' .
                 '</tr>';
             }

@@ -15,10 +15,10 @@ if (!defined('DC_RC_PATH')) {
 }
 
 $this->registerModule(
-    'My URL handlers',
+    'URL handlers',
     'Change Dotclear URL handlers',
     'Alex Pirine and contributors',
-    '2023.03.11',
+    '2023.03.27',
     [
         'requires'    => [['core', '2.26']],
         'permissions' => dcCore::app()->auth->makePermissions([

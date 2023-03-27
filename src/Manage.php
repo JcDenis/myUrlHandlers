@@ -34,7 +34,8 @@ class Manage extends dcNsProcess
             && dcCore::app()->auth->check(
                 dcCore::app()->auth->makePermissions([
                     dcAuth::PERMISSION_CONTENT_ADMIN,
-                ]), dcCore::app()->blog->id
+                ]),
+                dcCore::app()->blog->id
             );
 
         return static::$init;

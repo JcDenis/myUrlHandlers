@@ -22,14 +22,15 @@ class Install extends dcNsProcess
 {
     public static function init(): bool
     {
-        static::$init = defined('DC_CONTEXT_ADMIN') && dcCore::app()->newVersion(My::id(), dcCore::app()->plugins->moduleInfo(My::id(), 'version'));
+        static::$init = defined('DC_CONTEXT_ADMIN')
+            && dcCore::app()->newVersion(My::id(), dcCore::app()->plugins->moduleInfo(My::id(), 'version'));
 
         return static::$init;
     }
 
     public static function process(): bool
     {
-        if (!static::$init) {
+        if (!static::$init || is_null(dcCore::app()->blog)) {
             return false;
         }
 
@@ -58,14 +59,14 @@ class Install extends dcNsProcess
             );
 
             while ($record->fetch()) {
-                $value              = @unserialize($record->f('setting_value'));
-                $cur                = dcCore::app()->con->openCursor(dcCore::app()->prefix . dcNamespace::NS_TABLE_NAME);
-                $cur->setting_id    = My::NS_SETTING_ID;
-                $cur->setting_ns    = My::id();
-                $cur->setting_value = json_encode(is_array($value) ? $value : []);
+                $value = @unserialize($record->f('setting_value'));
+                $cur   = dcCore::app()->con->openCursor(dcCore::app()->prefix . dcNamespace::NS_TABLE_NAME);
+                $cur->setField('setting_id', My::NS_SETTING_ID);
+                $cur->setField('setting_ns', My::id());
+                $cur->setField('setting_value', json_encode(is_array($value) ? $value : []));
                 $cur->update(
                     "WHERE setting_id = '" . $record->f('setting_id') . "' and setting_ns = '" . $record->f('setting_ns') . "' " .
-                    'AND blog_id ' . (null === $record->f('blog_id') ? 'IS NULL ' : ("= '" . dcCore::app()->con->escape($record->f('blog_id')) . "' "))
+                    'AND blog_id ' . (null === $record->f('blog_id') ? 'IS NULL ' : ("= '" . dcCore::app()->con->escapeStr((string) $record->f('blog_id')) . "' "))
                 );
             }
         }

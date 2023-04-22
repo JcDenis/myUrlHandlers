@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\myUrlHandlers;
 
-use dcAuth;
 use dcCore;
 use dcNsProcess;
 use dcPage;
@@ -31,19 +30,17 @@ class Manage extends dcNsProcess
     public static function init(): bool
     {
         static::$init = defined('DC_CONTEXT_ADMIN')
-            && dcCore::app()->auth->check(
-                dcCore::app()->auth->makePermissions([
-                    dcAuth::PERMISSION_CONTENT_ADMIN,
-                ]),
-                dcCore::app()->blog->id
-            );
+            && !is_null(dcCore::app()->auth) && !is_null(dcCore::app()->blog)
+            && dcCore::app()->auth->check(dcCore::app()->auth->makePermissions([
+                dcCore::app()->auth::PERMISSION_CONTENT_ADMIN,
+            ]), dcCore::app()->blog->id);
 
         return static::$init;
     }
 
     public static function process(): bool
     {
-        if (!static::$init) {
+        if (!static::$init || is_null(dcCore::app()->adminurl)) {
             return false;
         }
 
@@ -117,7 +114,7 @@ class Manage extends dcNsProcess
 
     public static function render(): void
     {
-        if (!static::$init) {
+        if (!static::$init || is_null(dcCore::app()->blog)) {
             return;
         }
 

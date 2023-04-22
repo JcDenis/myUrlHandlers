@@ -18,10 +18,18 @@ use dcCore;
 
 class MyUrlHandlers
 {
-    private static $defaults     = [];
-    private static $url2post     = [];
-    private static $post_adm_url = [];
+    /** @var    array   $defaults   The default URLs handlers */
+    private static array $defaults = [];
 
+    /** @var    array   $url2post   The posts types URLs */
+    private static array $url2post = [];
+
+    /** @var    array   $post_adm_url   The posts types admin URLs */
+    private static array $post_adm_url = [];
+
+    /**
+     * Initialize handlers list.
+     */
     public static function init(): void
     {
         # Set defaults
@@ -50,6 +58,12 @@ class MyUrlHandlers
         }
     }
 
+    /**
+     * Override handler.
+     *
+     * @param   string  $name   The handler name
+     * @param   string  $url    The new url
+     */
     public static function overrideHandler(string $name, string $url): void
     {
         if (!isset(self::$defaults[$name])) {
@@ -70,6 +84,11 @@ class MyUrlHandlers
         }
     }
 
+    /**
+     * Get default URLs handlers
+     *
+     * @return  array   The default URLs handlers
+     */
     public static function getDefaults(): array
     {
         $res = [];
@@ -80,15 +99,31 @@ class MyUrlHandlers
         return $res;
     }
 
+    /**
+     * Get custom blog URLs handlers.
+     *
+     * @return  array   The blog URLs handlers
+     */
     public static function getBlogHandlers(): array
     {
+        if (is_null(dcCore::app()->blog)) {
+            return [];
+        }
         $handlers = json_decode((string) dcCore::app()->blog->settings->get(My::id())->get(My::NS_SETTING_ID), true);
 
         return is_array($handlers) ? $handlers : [];
     }
 
+    /**
+     * Save custom URLs handlers
+     *
+     * @param   array   $handlers   The custom URLs handlers
+     */
     public static function saveBlogHandlers(array $handlers): void
     {
+        if (is_null(dcCore::app()->blog)) {
+            return;
+        }
         dcCore::app()->blog->settings->get(My::id())->put(My::NS_SETTING_ID, json_encode($handlers));
         dcCore::app()->blog->triggerBlog();
     }

@@ -18,7 +18,7 @@ $this->registerModule(
     'URL handlers',
     'Change Dotclear URL handlers',
     'Alex Pirine and contributors',
-    '2023.03.27',
+    '2023.04.22',
     [
         'requires'    => [['core', '2.26']],
         'permissions' => dcCore::app()->auth->makePermissions([

@@ -16,12 +16,19 @@ namespace Dotclear\Plugin\myUrlHandlers;
 
 use dcCore;
 
+/**
+ * This module definitions.
+ */
 class My
 {
+    /** @var    string  This module settings ID */
     public const NS_SETTING_ID = 'handlers';
 
+    /** @var    string  This module required php version */
+    public const PHP_MIN = '7.4';
+
     /**
-     * This module id
+     * This module id.
      */
     public static function id(): string
     {
@@ -29,10 +36,28 @@ class My
     }
 
     /**
-     * This module name
+     * This module name.
      */
     public static function name(): string
     {
-        return __((string) dcCore::app()->plugins->moduleInfo(self::id(), 'name'));
+        $name = dcCore::app()->plugins->moduleInfo(self::id(), 'name');
+
+        return __(is_string($name) ? $name : self::id());
+    }
+
+    /**
+     * This module path.
+     */
+    public static function path(): string
+    {
+        return dirname(__DIR__);
+    }
+
+    /**
+     * Check this module PHP version compliant.
+     */
+    public static function phpCompliant(): bool
+    {
+        return version_compare(phpversion(), self::PHP_MIN, '>=');
     }
 }

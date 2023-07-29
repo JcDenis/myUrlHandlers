@@ -1,3 +1,8 @@
+2023.07.29
+* require dotclear 2.27
+* require PHP 7.4+
+* update to dotclear 2.27-dev
+
 2023.05.13
 * require dotclear 2.26
 * cleanup for dc2.26 stable

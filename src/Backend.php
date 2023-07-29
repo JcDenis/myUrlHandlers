@@ -14,46 +14,32 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\myUrlHandlers;
 
-use dcAdmin;
 use dcCore;
-use dcFavorites;
-use dcPage;
-use dcNsProcess;
+use Dotclear\Core\Process;
+use Dotclear\Core\backend\Favorites;
 
-class Backend extends dcNsProcess
+class Backend extends Process
 {
     public static function init(): bool
     {
-        static::$init = defined('DC_CONTEXT_ADMIN');
-
-        return static::$init;
+        return self::status(My::checkContext(My::BACKEND));
     }
 
     public static function process(): bool
     {
-        if (!static::$init || is_null(dcCore::app()->auth) || is_null(dcCore::app()->blog) || is_null(dcCore::app()->adminurl)) {
+        if (!self::status()) {
             return false;
         }
 
-        // add backend sidebar menu icon
-        dcCore::app()->menu[dcAdmin::MENU_PLUGINS]->addItem(
-            My::name(),
-            dcCore::app()->adminurl->get('admin.plugin.' . My::id()),
-            dcPage::getPF(My::id() . '/icon.svg'),
-            preg_match('/' . preg_quote(dcCore::app()->adminurl->get('admin.plugin.' . My::id())) . '(&.*)?$/', $_SERVER['REQUEST_URI']),
-            dcCore::app()->auth->check(dcCore::app()->auth->makePermissions([dcCore::app()->auth::PERMISSION_CONTENT_ADMIN]), dcCore::app()->blog->id)
-        );
+        My::addBackendMenuItem();
 
         // register user backend dashboard icon
-        dcCore::app()->addBehavior('adminDashboardFavoritesV2', function (dcFavorites $favs): void {
-            if (is_null(dcCore::app()->auth) || is_null(dcCore::app()->adminurl)) {
-                return;
-            }
+        dcCore::app()->addBehavior('adminDashboardFavoritesV2', function (Favorites $favs): void {
             $favs->register(My::id(), [
                 'title'       => My::name(),
-                'url'         => dcCore::app()->adminurl->get('admin.plugin.' . My::id()),
-                'small-icon'  => dcPage::getPF(My::id() . '/icon.svg'),
-                'large-icon'  => dcPage::getPF(My::id() . '/icon.svg'),
+                'url'         => My::manageUrl(),
+                'small-icon'  => My::icons(),
+                'large-icon'  => My::icons(),
                 'permissions' => dcCore::app()->auth->makePermissions([dcCore::app()->auth::PERMISSION_CONTENT_ADMIN]),
             ]);
         });

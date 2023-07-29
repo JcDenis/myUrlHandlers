@@ -109,7 +109,7 @@ class MyUrlHandlers
         if (is_null(dcCore::app()->blog)) {
             return [];
         }
-        $handlers = json_decode((string) dcCore::app()->blog->settings->get(My::id())->get(My::NS_SETTING_ID), true);
+        $handlers = json_decode((string) My::settings()->get(My::NS_SETTING_ID), true);
 
         return is_array($handlers) ? $handlers : [];
     }
@@ -124,7 +124,7 @@ class MyUrlHandlers
         if (is_null(dcCore::app()->blog)) {
             return;
         }
-        dcCore::app()->blog->settings->get(My::id())->put(My::NS_SETTING_ID, json_encode($handlers));
+        My::settings()->put(My::NS_SETTING_ID, json_encode($handlers));
         dcCore::app()->blog->triggerBlog();
     }
 }

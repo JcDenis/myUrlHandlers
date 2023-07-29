@@ -15,8 +15,11 @@ declare(strict_types=1);
 namespace Dotclear\Plugin\myUrlHandlers;
 
 use dcCore;
-use dcNsProcess;
-use dcPage;
+use Dotclear\Core\Process;
+use Dotclear\Core\Backend\{
+    Notices,
+    Page
+};
 use Dotclear\Helper\Html\Form\Input;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Text;
@@ -25,22 +28,16 @@ use Exception;
 /**
  * Manage contributions list
  */
-class Manage extends dcNsProcess
+class Manage extends Process
 {
     public static function init(): bool
     {
-        static::$init = defined('DC_CONTEXT_ADMIN')
-            && !is_null(dcCore::app()->auth) && !is_null(dcCore::app()->blog)
-            && dcCore::app()->auth->check(dcCore::app()->auth->makePermissions([
-                dcCore::app()->auth::PERMISSION_CONTENT_ADMIN,
-            ]), dcCore::app()->blog->id);
-
-        return static::$init;
+        return self::status(My::checkContext(My::MANAGE));
     }
 
     public static function process(): bool
     {
-        if (!static::$init || is_null(dcCore::app()->adminurl)) {
+        if (!self::status()) {
             return false;
         }
 
@@ -98,12 +95,12 @@ class Manage extends dcNsProcess
 
             if (isset($_POST['act_save'])) {
                 MyUrlHandlers::saveBlogHandlers($handlers);
-                dcPage::addSuccessNotice(__('URL handlers have been successfully updated.'));
-                dcCore::app()->adminurl->redirect('admin.plugin.' . My::id());
+                Notices::addSuccessNotice(__('URL handlers have been successfully updated.'));
+                My::redirect();
             } elseif (isset($_POST['act_restore'])) {
                 MyUrlHandlers::saveBlogHandlers([]);
-                dcPage::addSuccessNotice(__('URL handlers have been successfully restored.'));
-                dcCore::app()->adminurl->redirect('admin.plugin.' . My::id());
+                Notices::addSuccessNotice(__('URL handlers have been successfully restored.'));
+                My::redirect();
             }
         } catch (Exception $e) {
             dcCore::app()->error->add($e->getMessage());
@@ -114,22 +111,22 @@ class Manage extends dcNsProcess
 
     public static function render(): void
     {
-        if (!static::$init || is_null(dcCore::app()->blog)) {
+        if (!self::status()) {
             return;
         }
 
         $handlers = self::getHandlers();
 
-        dcPage::openModule(My::name());
+        Page::openModule(My::name());
 
         echo
-        dcPage::breadcrumb(
+        Page::breadcrumb(
             [
                 Html::escapeHTML(dcCore::app()->blog->name) => '',
                 My::name()                                  => '',
             ]
         ) .
-        dcPage::notices();
+        Notices::getNotices();
 
         if (empty($handlers)) {
             echo
@@ -164,11 +161,11 @@ class Manage extends dcNsProcess
             '<p>' .
             '<input type="submit" name="act_save" value="' . __('Save') . '" /> ' .
             '<input class="delete" type="submit" name="act_restore" value="' . __('Reset') . '" />' .
-            dcCore::app()->formNonce() . '</p>' .
+            My::parsedHiddenFields() . '</p>' .
             '</form>';
         }
 
-        dcPage::closeModule();
+        Page::closeModule();
     }
 
     private static function getHandlers(): array

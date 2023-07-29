@@ -3,7 +3,7 @@
 [![Release](https://img.shields.io/github/v/release/JcDenis/myUrlHandlers)](https://github.com/JcDenis/myUrlHandlers/releases)
 [![Date](https://img.shields.io/github/release-date/JcDenis/myUrlHandlers)](https://github.com/JcDenis/myUrlHandlers/releases)
 [![Issues](https://img.shields.io/github/issues/JcDenis/myUrlHandlers)](https://github.com/JcDenis/myUrlHandlers/issues)
-[![Dotclear](https://img.shields.io/badge/dotclear-v2.26-blue.svg)](https://fr.dotclear.org/download)
+[![Dotclear](https://img.shields.io/badge/dotclear-v2.27-blue.svg)](https://fr.dotclear.org/download)
 [![Dotaddict](https://img.shields.io/badge/dotaddict-official-green.svg)](https://plugins.dotaddict.org/dc2/details/myUrlHandlers)
 [![License](https://img.shields.io/github/license/JcDenis/myUrlHandlers)](https://github.com/JcDenis/myUrlHandlers/blob/master/LICENSE)
 
@@ -19,8 +19,9 @@ like post, category, etc and some plugins having public parts.
 
  _myUrlHandlers_ requires: 
 
-  * contentadmin permissions for management
-  * Dotclear 2.26
+ * contentadmin permissions for management
+ * Dotclear 2.27
+ * PHP 7.4+
 
 ## USAGE
 

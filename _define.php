@@ -18,7 +18,7 @@ $this->registerModule(
     'URL handlers',
     'Change Dotclear URL handlers',
     'Alex Pirine and contributors',
-    '2023.07.29',
+    '2023.08.13',
     [
         'requires'    => [['core', '2.27']],
         'permissions' => dcCore::app()->auth->makePermissions([
@@ -26,8 +26,8 @@ $this->registerModule(
         ]),
         'priority'   => 150000,
         'type'       => 'plugin',
-        'support'    => 'https://github.com/JcDenis/myUrlHandlers',
-        'details'    => 'http://plugins.dotaddict.org/dc2/details/myUrlHandlers',
-        'repository' => 'https://raw.githubusercontent.com/JcDenis/myUrlHandlers/master/dcstore.xml',
+        'support'    => 'https://git.dotclear.watch/JcDenis/' . basename(__DIR__) . '/issues',
+        'details'    => 'https://git.dotclear.watch/JcDenis/' . basename(__DIR__) . '/src/branch/master/README.md',
+        'repository' => 'https://git.dotclear.watch/JcDenis/' . basename(__DIR__) . '/raw/branch/master/dcstore.xml',
     ]
 );

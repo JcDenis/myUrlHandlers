@@ -16,7 +16,7 @@ namespace Dotclear\Plugin\myUrlHandlers;
 
 use dcCore;
 use Dotclear\Core\Process;
-use Dotclear\Core\backend\Favorites;
+use Dotclear\Core\Backend\Favorites;
 
 class Backend extends Process
 {

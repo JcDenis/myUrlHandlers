@@ -14,17 +14,30 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\myUrlHandlers;
 
-use dcCore;
+use Dotclear\App;
+use Dotclear\Core\PostType;
 
 class MyUrlHandlers
 {
-    /** @var    array   $defaults   The default URLs handlers */
+    /**
+     * The default URLs handlers.
+     *
+     * @var     array<string,array<string,string>>  $defaults
+     */
     private static array $defaults = [];
 
-    /** @var    array   $url2post   The posts types URLs */
+    /**
+     * The posts types URLs.
+     *
+     * @var     array<string,string>    $url2post
+     */
     private static array $url2post = [];
 
-    /** @var    array   $post_adm_url   The posts types admin URLs */
+    /**
+     * The posts types admin URLs.
+     *
+     * @var     array<string,string>    $post_adm_url
+     */
     private static array $post_adm_url = [];
 
     /**
@@ -33,7 +46,7 @@ class MyUrlHandlers
     public static function init(): void
     {
         # Set defaults
-        foreach (dcCore::app()->url->getTypes() as $k => $v) {
+        foreach (App::url()->getTypes() as $k => $v) {
             if (empty($v['url'])) {
                 continue;
             }
@@ -47,9 +60,9 @@ class MyUrlHandlers
             }
         }
 
-        foreach (dcCore::app()->getPostTypes() as $k => $v) {
-            self::$url2post[$v['public_url']] = $k;
-            self::$post_adm_url[$k]           = $v['admin_url'];
+        foreach (App::postTypes()->dump() as $pt) {
+            self::$url2post[$pt->public_url] = $pt->type;
+            self::$post_adm_url[$pt->type]   = $pt->admin_url;
         }
 
         # Read user settings
@@ -70,7 +83,7 @@ class MyUrlHandlers
             return;
         }
 
-        dcCore::app()->url->register(
+        App::url()->register(
             $name,
             $url,
             sprintf(self::$defaults[$name]['representation'], $url),
@@ -80,14 +93,18 @@ class MyUrlHandlers
         $k = self::$url2post[self::$defaults[$name]['url'] . '/%s'] ?? '';
 
         if ($k) {
-            dcCore::app()->setPostType($k, self::$post_adm_url[$k], dcCore::app()->url->getBase($name) . '/%s');
+            App::postTypes()->set(new PostType(
+                $k,
+                self::$post_adm_url[$k],
+                App::url()->getBase($name) . '/%s'
+            ));
         }
     }
 
     /**
-     * Get default URLs handlers
+     * Get default URLs handlers.
      *
-     * @return  array   The default URLs handlers
+     * @return  array<string,string>    The default URLs handlers
      */
     public static function getDefaults(): array
     {
@@ -102,29 +119,23 @@ class MyUrlHandlers
     /**
      * Get custom blog URLs handlers.
      *
-     * @return  array   The blog URLs handlers
+     * @return  array<string,string>    The blog URLs handlers
      */
     public static function getBlogHandlers(): array
     {
-        if (is_null(dcCore::app()->blog)) {
-            return [];
-        }
         $handlers = json_decode((string) My::settings()->get(My::NS_SETTING_ID), true);
 
         return is_array($handlers) ? $handlers : [];
     }
 
     /**
-     * Save custom URLs handlers
+     * Save custom URLs handlers.
      *
-     * @param   array   $handlers   The custom URLs handlers
+     * @param   array<string,string>    $handlers   The custom URLs handlers
      */
     public static function saveBlogHandlers(array $handlers): void
     {
-        if (is_null(dcCore::app()->blog)) {
-            return;
-        }
         My::settings()->put(My::NS_SETTING_ID, json_encode($handlers));
-        dcCore::app()->blog->triggerBlog();
+        App::blog()->triggerBlog();
     }
 }

@@ -10,9 +10,7 @@
  * @copyright Jean-Christian Denis
  * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
-if (!defined('DC_RC_PATH')) {
-    return null;
-}
+use Dotclear\App;
 
 $this->registerModule(
     'URL handlers',
@@ -20,9 +18,9 @@ $this->registerModule(
     'Alex Pirine and contributors',
     '2023.08.13',
     [
-        'requires'    => [['core', '2.27']],
-        'permissions' => dcCore::app()->auth->makePermissions([
-            dcCore::app()->auth::PERMISSION_CONTENT_ADMIN,
+        'requires'    => [['core', '2.28']],
+        'permissions' => App::auth()->makePermissions([
+            App::auth()::PERMISSION_CONTENT_ADMIN,
         ]),
         'priority'   => 150000,
         'type'       => 'plugin',

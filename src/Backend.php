@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\myUrlHandlers;
 
-use dcCore;
+use Dotclear\App;
 use Dotclear\Core\Process;
 use Dotclear\Core\Backend\Favorites;
 
@@ -34,13 +34,13 @@ class Backend extends Process
         My::addBackendMenuItem();
 
         // register user backend dashboard icon
-        dcCore::app()->addBehavior('adminDashboardFavoritesV2', function (Favorites $favs): void {
+        App::behavior()->addBehavior('adminDashboardFavoritesV2', function (Favorites $favs): void {
             $favs->register(My::id(), [
                 'title'       => My::name(),
                 'url'         => My::manageUrl(),
                 'small-icon'  => My::icons(),
                 'large-icon'  => My::icons(),
-                'permissions' => dcCore::app()->auth->makePermissions([dcCore::app()->auth::PERMISSION_CONTENT_ADMIN]),
+                'permissions' => App::auth()->makePermissions([App::auth()::PERMISSION_CONTENT_ADMIN]),
             ]);
         });
 

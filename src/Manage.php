@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\myUrlHandlers;
 
-use dcCore;
+use Dotclear\App;
 use Dotclear\Core\Process;
 use Dotclear\Core\Backend\{
     Notices,
@@ -103,7 +103,7 @@ class Manage extends Process
                 My::redirect();
             }
         } catch (Exception $e) {
-            dcCore::app()->error->add($e->getMessage());
+            App::error()->add($e->getMessage());
         }
 
         return true;
@@ -122,8 +122,8 @@ class Manage extends Process
         echo
         Page::breadcrumb(
             [
-                Html::escapeHTML(dcCore::app()->blog->name) => '',
-                My::name()                                  => '',
+                Html::escapeHTML(App::blog()->name()) => '',
+                My::name()                            => '',
             ]
         ) .
         Notices::getNotices();
@@ -133,7 +133,7 @@ class Manage extends Process
             '<p class="message">' . __('No URL handler to configure.') . '</p>';
         } else {
             echo
-            '<form action="' . dcCore::app()->admin->getPageURL() . '" method="post">' .
+            '<form action="' . App::backend()->getPageURL() . '" method="post">' .
             '<div class="table-outer">' .
             '<table>' .
             '<caption>' . __('URL handlers list') . '</caption>' .
@@ -168,6 +168,11 @@ class Manage extends Process
         Page::closeModule();
     }
 
+    /**
+     * Get handlers.
+     *
+     * @return  array<string,string>    The handlers
+     */
     private static function getHandlers(): array
     {
         # Read default handlers

@@ -14,8 +14,7 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\myUrlHandlers;
 
-use dcCore;
-use dcNamespace;
+use Dotclear\App;
 use Dotclear\Core\Process;
 
 class Install extends Process
@@ -46,24 +45,24 @@ class Install extends Process
 
     private static function growUp(): void
     {
-        $current = dcCore::app()->getVersion(My::id());
+        $current = App::version()->getVersion(My::id());
 
         // Update settings id, ns, value
         if ($current && version_compare($current, '2023.03.11', '<')) {
-            $record = dcCore::app()->con->select(
-                'SELECT * FROM ' . dcCore::app()->prefix . dcNamespace::NS_TABLE_NAME . ' ' .
+            $record = App::con()->select(
+                'SELECT * FROM ' . App::con()->prefix() . App::blogWorkspace()::NS_TABLE_NAME . ' ' .
                 "WHERE setting_ns = 'myurlhandlers' AND setting_id = 'url_handlers' "
             );
 
             while ($record->fetch()) {
                 $value = @unserialize($record->f('setting_value'));
-                $cur   = dcCore::app()->con->openCursor(dcCore::app()->prefix . dcNamespace::NS_TABLE_NAME);
+                $cur   = App::blogWorkspace()->openBlogWorkspaceCursor();
                 $cur->setField('setting_id', My::NS_SETTING_ID);
                 $cur->setField('setting_ns', My::id());
                 $cur->setField('setting_value', json_encode(is_array($value) ? $value : []));
                 $cur->update(
                     "WHERE setting_id = '" . $record->f('setting_id') . "' and setting_ns = '" . $record->f('setting_ns') . "' " .
-                    'AND blog_id ' . (null === $record->f('blog_id') ? 'IS NULL ' : ("= '" . dcCore::app()->con->escapeStr((string) $record->f('blog_id')) . "' "))
+                    'AND blog_id ' . (null === $record->f('blog_id') ? 'IS NULL ' : ("= '" . App::con()->escapeStr((string) $record->f('blog_id')) . "' "))
                 );
             }
         }

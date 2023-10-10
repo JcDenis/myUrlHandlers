@@ -18,6 +18,15 @@ use Dotclear\App;
 use Dotclear\Core\Process;
 use Dotclear\Core\Backend\Favorites;
 
+/**
+ * @brief   myUrlHandlers backend class.
+ * @ingroup myUrlHandlers
+ *
+ * @author      Alex Pirine and contributors
+ * @author      Jean-Christian Denis
+ * @copyright   Alex Pirine
+ * @copyright   GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
+ */
 class Backend extends Process
 {
     public static function init(): bool

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\myUrlHandlers;
 
-use Dotclear\App;
 use Dotclear\Module\MyPlugin;
 
 /**

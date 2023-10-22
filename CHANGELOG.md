@@ -1,3 +1,10 @@
+myUrlHandlers 2023.10.22
+===========================================================
+* Require Dotclear 2.28
+* Require PHP 8.1
+* Use default permissions and update to admin only
+* Code review (phpstan)
+
 myUrlHandlers 2023.10.11
 ===========================================================
 * Require Dotclear 2.28

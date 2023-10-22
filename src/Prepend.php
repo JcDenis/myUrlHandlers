@@ -7,12 +7,11 @@ namespace Dotclear\Plugin\myUrlHandlers;
 use Dotclear\Core\Process;
 
 /**
- * @brief   myUrlHandlers prepend class.
- * @ingroup myUrlHandlers
+ * @brief       myUrlHandlers prepend class.
+ * @ingroup     myUrlHandlers
  *
- * @author      Alex Pirine and contributors
- * @author      Jean-Christian Denis
- * @copyright   Alex Pirine
+ * @author      Alex Pirine (author)
+ * @author      Jean-Christian Denis (latest)
  * @copyright   GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
 class Prepend extends Process

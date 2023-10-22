@@ -8,12 +8,11 @@ use Dotclear\Core\Process;
 use Dotclear\Plugin\Uninstaller\Uninstaller;
 
 /**
- * @brief   myUrlHandlers uninstall class.
- * @ingroup myUrlHandlers
+ * @brief       myUrlHandlers uninstall class.
+ * @ingroup     myUrlHandlers
  *
- * @author      Alex Pirine and contributors
- * @author      Jean-Christian Denis
- * @copyright   Alex Pirine
+ * @author      Alex Pirine (author)
+ * @author      Jean-Christian Denis (latest)
  * @copyright   GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
 class Uninstall extends Process

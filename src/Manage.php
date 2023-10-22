@@ -16,12 +16,11 @@ use Dotclear\Helper\Text;
 use Exception;
 
 /**
- * @brief   myUrlHandlers manage class.
- * @ingroup myUrlHandlers
+ * @brief       myUrlHandlers manage class.
+ * @ingroup     myUrlHandlers
  *
- * @author      Alex Pirine and contributors
- * @author      Jean-Christian Denis
- * @copyright   Alex Pirine
+ * @author      Alex Pirine (author)
+ * @author      Jean-Christian Denis (latest)
  * @copyright   GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
 class Manage extends Process
@@ -47,14 +46,14 @@ class Manage extends Process
                     if (empty($handlers[$name])) {
                         throw new Exception(sprintf(
                             __('Uknown handler "%s".'),
-                            Html::escapeHTML($name)
+                            Html::escapeHTML((string) $name)
                         ));
                     }
 
                     if (empty($url)) {
                         throw new Exception(sprintf(
                             __('Invalid URL for handler "%s".'),
-                            Html::escapeHTML($name)
+                            Html::escapeHTML((string) $name)
                         ));
                     }
 

@@ -8,60 +8,65 @@ use Dotclear\App;
 use Dotclear\Core\PostType;
 
 /**
- * @brief   myUrlHandlers main class.
- * @ingroup myUrlHandlers
+ * @brief       myUrlHandlers main class.
+ * @ingroup     myUrlHandlers
  *
- * @author      Alex Pirine and contributors
- * @author      Jean-Christian Denis
- * @copyright   Alex Pirine
+ * @author      Alex Pirine (author)
+ * @author      Jean-Christian Denis (latest)
  * @copyright   GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
 class MyUrlHandlers
 {
     /**
-     * The default URLs handlers.
+     * The URLs stack.
      *
-     * @var     array<string,array<string,string>>  $defaults
+     * @var     UrlStack    $stack
      */
-    private static array $defaults = [];
+    private static UrlStack $stack;
 
     /**
      * The posts types URLs.
      *
-     * @var     array<string,string>    $url2post
+     * @var     array<string, string>   $pt_public2type
      */
-    private static array $url2post = [];
+    private static array $pt_public2type = [];
 
     /**
      * The posts types admin URLs.
      *
-     * @var     array<string,string>    $post_adm_url
+     * @var     array<string, string>   $pt_type2admin
      */
-    private static array $post_adm_url = [];
+    private static array $pt_type2admin = [];
 
     /**
      * Initialize handlers list.
      */
     public static function init(): void
     {
+        self::$stack = new UrlStack();
+
         # Set defaults
         foreach (App::url()->getTypes() as $k => $v) {
             if (empty($v['url'])) {
                 continue;
             }
 
-            $p                   = '/' . preg_quote($v['url'], '/') . '/';
             $v['representation'] = str_replace('%', '%%', $v['representation']);
-            $v['representation'] = preg_replace($p, '%s', $v['representation'], 1, $c);
+            $v['representation'] = preg_replace('/' . preg_quote($v['url'], '/') . '/', '%s', $v['representation'], 1, $c);
 
-            if ($c) {
-                self::$defaults[$k] = $v;
+            if ($c && is_string($v['representation'])) {
+                self::$stack->set(new UrlDescriptor(
+                    $k,
+                    $v['url'],
+                    $v['representation'],
+                    $v['handler'] ?? null
+                ));
             }
         }
 
         foreach (App::postTypes()->dump() as $pt) {
-            self::$url2post[$pt->public_url] = $pt->type;
-            self::$post_adm_url[$pt->type]   = $pt->admin_url;
+            self::$pt_public2type[$pt->public_url] = $pt->type;
+            self::$pt_type2admin[$pt->type]        = $pt->admin_url;
         }
 
         # Read user settings
@@ -78,38 +83,40 @@ class MyUrlHandlers
      */
     public static function overrideHandler(string $name, string $url): void
     {
-        if (!isset(self::$defaults[$name])) {
+        $desc = self::$stack->get($name);
+        if (is_null($desc->handler())) {
             return;
         }
 
         App::url()->register(
             $name,
             $url,
-            sprintf(self::$defaults[$name]['representation'], $url),
-            self::$defaults[$name]['handler']
+            sprintf($desc->representation, $url),
+            $desc->handler()
         );
 
-        $k = self::$url2post[self::$defaults[$name]['url'] . '/%s'] ?? '';
-
-        if ($k) {
-            App::postTypes()->set(new PostType(
-                $k,
-                self::$post_adm_url[$k],
-                App::url()->getBase($name) . '/%s'
-            ));
+        $type = self::$pt_public2type[$desc->url . '/%s'] ?? '';
+        if (!$type) {
+            return;
         }
+
+        App::postTypes()->set(new PostType(
+            $type,
+            self::$pt_type2admin[$type],
+            App::url()->getBase($name) . '/%s'
+        ));
     }
 
     /**
      * Get default URLs handlers.
      *
-     * @return  array<string,string>    The default URLs handlers
+     * @return  array<string, string>   The default URLs handlers
      */
     public static function getDefaults(): array
     {
         $res = [];
-        foreach (self::$defaults as $k => $v) {
-            $res[$k] = $v['url'];
+        foreach (self::$stack->dump() as $v) {
+            $res[$v->id] = $v->url;
         }
 
         return $res;
@@ -118,7 +125,7 @@ class MyUrlHandlers
     /**
      * Get custom blog URLs handlers.
      *
-     * @return  array<string,string>    The blog URLs handlers
+     * @return  array<string, string>   The blog URLs handlers
      */
     public static function getBlogHandlers(): array
     {
@@ -130,7 +137,7 @@ class MyUrlHandlers
     /**
      * Save custom URLs handlers.
      *
-     * @param   array<string,string>    $handlers   The custom URLs handlers
+     * @param   array<string, string>   $handlers   The custom URLs handlers
      */
     public static function saveBlogHandlers(array $handlers): void
     {

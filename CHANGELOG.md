@@ -1,3 +1,10 @@
+myUrlHandlers 2023.10.23
+===========================================================
+* Require Dotclear 2.28
+* Require PHP 8.1
+* Fix typo
+* Fix repository branch
+
 myUrlHandlers 2023.10.22
 ===========================================================
 * Require Dotclear 2.28

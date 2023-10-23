@@ -145,7 +145,7 @@ class Manage extends Process
                 '<tr class="line">' .
                 '<td class="nowrap minimal">' . Html::escapeHTML($name) . '</td>' .
                 '<td>' .
-                    (new Input(['handlers[' . $name . ']']))->size(20)->maxlenght(255)->value(Html::escapeHTML($url))->render() .
+                    (new Input(['handlers[' . $name . ']']))->size(20)->maxlength(255)->value(Html::escapeHTML($url))->render() .
                 '</td>' .
                 '</tr>';
             }

@@ -1,3 +1,9 @@
+myUrlHandlers 2023.11.27
+===========================================================
+* Require Dotclear 2.28
+* Require PHP 8.1
+* Try to fix an error on callable
+
 myUrlHandlers 2023.10.23
 ===========================================================
 * Require Dotclear 2.28

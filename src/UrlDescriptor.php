@@ -27,16 +27,18 @@ class UrlDescriptor
      * @param   string      $id                 The ID
      * @param   string      $url                The URL
      * @param   string      $representation     The representation
-     * @param   ?callable   $handler            The callback
+     * @param   mixed       $handler            The callback
      */
     public function __construct(
         public readonly string $id,
         public readonly string $url = '',
         public readonly string $representation = '',
-        ?callable $handler = null,
+        mixed $handler = null,
     ) {
         // As PHP does not support callable property type.
-        $this->handler = $handler;
+        if (is_callable($handler)) {
+            $this->handler = $handler;
+        }
     }
 
     /**

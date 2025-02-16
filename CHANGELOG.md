@@ -1,3 +1,9 @@
+myUrlHandlers 2025.02.16
+===========================================================
+* Require Dotclear 2.33
+* Require PHP 8.1
+* Fix duplicate finder
+
 myUrlHandlers 2023.11.27
 ===========================================================
 * Require Dotclear 2.28

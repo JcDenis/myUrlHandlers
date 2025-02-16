@@ -60,25 +60,16 @@ class Manage extends Process
                     $handlers[$name] = $url;
                 }
 
-                # Get duplicates
-                $w = array_unique(array_diff_key($handlers, array_unique($handlers)));
-
-                /**
-                 * Error on the line
-                 * array_walk($w,create_function('&$v,$k,$h','$v = array_keys($h,$v);'),$handlers);
-                 *
-                 * Begin fix
-                 */
-                $v = function (&$v, $k, $h) {
-                    return array_keys($h, $v);
-                };
-
-                array_walk($w, $v, $handlers);
-
-                /**
-                 * End fix
-                 */
-                $w = call_user_func_array('array_merge', $w);
+                # Get duplicates keys
+                $duplicates = array_unique(array_diff_key($handlers, array_unique($handlers)));
+                # Get duplicates handlers
+                $w = [];
+                foreach($handlers as $hk => $hv) {
+                    foreach($duplicates as $dk => $dv)
+                    if ($hv == $dv) {
+                        $w[] = $hk;
+                    }
+                }
 
                 if (!empty($w)) {
                     throw new Exception(sprintf(

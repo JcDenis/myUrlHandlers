@@ -28,6 +28,6 @@ $this->registerModule(
         'support'     => 'https://git.dotclear.watch/JcDenis/' . basename(__DIR__) . '/issues',
         'details'     => 'https://git.dotclear.watch/JcDenis/' . basename(__DIR__) . '/src/branch/master/README.md',
         'repository'  => 'https://git.dotclear.watch/JcDenis/' . basename(__DIR__) . '/raw/branch/master/dcstore.xml',
-        'date'        => '2025-02-15T10:10:10+00:00',
+        'date'        => '2025-02-16T20:44:44+00:00',
     ]
 );

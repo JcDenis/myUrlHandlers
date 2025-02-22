@@ -50,7 +50,7 @@ jobs:
           // authenticate to DA
           $ch = curl_init();
           curl_setopt_array($ch, [
-            CURLOPT_URL => '${{ env.DA_URL }}',
+            CURLOPT_URL => '${{ env.DA_URL }}/auth',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query([

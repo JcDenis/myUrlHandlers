@@ -7,7 +7,7 @@
     <desc>Change Dotclear URL handlers</desc>
     <file>https://github.com/JcDenis/myUrlHandlers/releases/download/v2025.02.16/plugin-myUrlHandlers.zip</file>
     <da:dcmin>2.33</da:dcmin>
-    <da:details>https://git.dotclear.watch/JcDenis/myUrlHandlers/src/branch/master/README.md</da:details>
-    <da:support>https://git.dotclear.watch/JcDenis/myUrlHandlers/issues</da:support>
+    <da:details>https://github.com/JcDenis/myUrlHandlers/src/branch/master/README.md</da:details>
+    <da:support>https://github.com/JcDenis/myUrlHandlers/issues</da:support>
   </module>
 </modules>

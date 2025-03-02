@@ -2,7 +2,7 @@ name: Dotaddict repository update
 
 on:
   schedule:
-  - cron: '35 3 * * *'
+  - cron: '30 3 * * *'
   workflow_dispatch:
 
 env:

@@ -2,10 +2,10 @@
 <modules xmlns:da="http://dotaddict.org/da/">
   <module id="myUrlHandlers">
     <name>URL handlers</name>
-    <version>2025.02.16</version>
+    <version>2025.03.02</version>
     <author>Alex Pirine and contributors</author>
     <desc>Change Dotclear URL handlers</desc>
-    <file>https://github.com/JcDenis/myUrlHandlers/releases/download/v2025.02.16/plugin-myUrlHandlers.zip</file>
+    <file>https://github.com/JcDenis/myUrlHandlers/releases/download/v2025.03.02/plugin-myUrlHandlers.zip</file>
     <da:dcmin>2.33</da:dcmin>
     <da:details>https://github.com/JcDenis/myUrlHandlers/src/branch/master/README.md</da:details>
     <da:support>https://github.com/JcDenis/myUrlHandlers/issues</da:support>

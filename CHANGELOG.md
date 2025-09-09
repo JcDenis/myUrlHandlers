@@ -1,3 +1,8 @@
+myUrlHandlers 2025.09.09
+===========================================================
+* Bump Dotclear from 2.33 to 2.36
+* Use TraitProcess
+
 myUrlHandlers 2025.03.02
 ===========================================================
 * Require Dotclear 2.33

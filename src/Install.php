@@ -49,8 +49,8 @@ class Install
 
         // Update settings id, ns, value
         if ($current && version_compare($current, '2023.03.11', '<')) {
-            $record = App::con()->select(
-                'SELECT * FROM ' . App::con()->prefix() . App::blogWorkspace()::NS_TABLE_NAME . ' ' .
+            $record = App::db()->con()->select(
+                'SELECT * FROM ' . App::db()->con()->prefix() . App::blogWorkspace()::NS_TABLE_NAME . ' ' .
                 "WHERE setting_ns = 'myurlhandlers' AND setting_id = 'url_handlers' "
             );
 
@@ -62,7 +62,7 @@ class Install
                 $cur->setField('setting_value', json_encode(is_array($value) ? $value : []));
                 $cur->update(
                     "WHERE setting_id = '" . $record->f('setting_id') . "' and setting_ns = '" . $record->f('setting_ns') . "' " .
-                    'AND blog_id ' . (null === $record->f('blog_id') ? 'IS NULL ' : ("= '" . App::con()->escapeStr((string) $record->f('blog_id')) . "' "))
+                    'AND blog_id ' . (null === $record->f('blog_id') ? 'IS NULL ' : ("= '" . App::db()->con()->escapeStr((string) $record->f('blog_id')) . "' "))
                 );
             }
         }

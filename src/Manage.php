@@ -6,10 +6,8 @@ namespace Dotclear\Plugin\myUrlHandlers;
 
 use Dotclear\App;
 use Dotclear\Helper\Process\TraitProcess;
-use Dotclear\Core\Backend\{
-    Notices,
-    Page
-};
+use Dotclear\Core\Backend\Notices;
+use Dotclear\Core\Backend\Page;
 use Dotclear\Helper\Html\Form\Input;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Text;

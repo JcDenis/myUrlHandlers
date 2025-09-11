@@ -19,7 +19,7 @@ $this->registerModule(
     'URL handlers',
     'Change Dotclear URL handlers',
     'Alex Pirine and contributors',
-    '2025.09.09',
+    '2025.09.11',
     [
         'requires'    => [['core', '2.36']],
         'permissions' => 'My',

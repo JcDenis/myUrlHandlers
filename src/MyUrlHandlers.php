@@ -59,7 +59,7 @@ class MyUrlHandlers
                     $k,
                     $v['url'],
                     $v['representation'],
-                    $v['handler'] ?? null
+                    $v['handler']
                 ));
             }
         }
@@ -129,9 +129,19 @@ class MyUrlHandlers
      */
     public static function getBlogHandlers(): array
     {
-        $handlers = json_decode((string) My::settings()->get(My::NS_SETTING_ID), true);
+        $settings = My::settings()->get(My::NS_SETTING_ID);
+        $handlers = json_decode(is_string($settings) ? $settings : '', true);
 
-        return is_array($handlers) ? $handlers : [];
+        $ret = [];
+        if (is_array($handlers)) {
+            foreach($handlers as $k => $v) {
+                if (is_string($k) && is_string($v)) {
+                    $ret[$k] = $v;
+                }
+            }
+        }
+
+        return $ret;
     }
 
     /**

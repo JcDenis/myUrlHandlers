@@ -55,14 +55,18 @@ class Install
             );
 
             while ($record->fetch()) {
-                $value = @unserialize($record->f('setting_value'));
+                $sval = is_string($record->f('setting_value')) ? $record->f('setting_value') : '';
+                $sid  = is_string($record->f('setting_id')) ? $record->f('setting_id') : '';
+                $sns  = is_string($record->f('setting_ns')) ? $record->f('setting_ns') : '';
+                $blog  = is_string($record->f('blog_id')) ? $record->f('blog_id') : null;
+                $value = @unserialize($sval);
                 $cur   = App::blogWorkspace()->openBlogWorkspaceCursor();
                 $cur->setField('setting_id', My::NS_SETTING_ID);
                 $cur->setField('setting_ns', My::id());
                 $cur->setField('setting_value', json_encode(is_array($value) ? $value : []));
                 $cur->update(
-                    "WHERE setting_id = '" . $record->f('setting_id') . "' and setting_ns = '" . $record->f('setting_ns') . "' " .
-                    'AND blog_id ' . (null === $record->f('blog_id') ? 'IS NULL ' : ("= '" . App::db()->con()->escapeStr((string) $record->f('blog_id')) . "' "))
+                    "WHERE setting_id = '" . $sid . "' and setting_ns = '" . $sns . "' " .
+                    'AND blog_id ' . (null === $blog ? 'IS NULL ' : ("= '" . App::db()->con()->escapeStr($blog) . "' "))
                 );
             }
         }

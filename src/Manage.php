@@ -41,7 +41,7 @@ class Manage
 
             if (!empty($_POST['handlers']) && is_array($_POST['handlers'])) {
                 foreach ($_POST['handlers'] as $name => $url) {
-                    $url = Text::tidyURL($url);
+                    $url = is_string($url) ? Text::tidyURL($url) : '';
 
                     if (empty($handlers[$name])) {
                         throw new Exception(sprintf(

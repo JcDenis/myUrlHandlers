@@ -15,19 +15,21 @@
  */
 declare(strict_types=1);
 
+$id = 'myUrlHandlers';
+
 $this->registerModule(
     'URL handlers',
     'Change Dotclear URL handlers',
     'Alex Pirine and contributors',
     '2025.09.11',
     [
-        'requires'    => [['core', '2.36']],
+        'requires'    => [['core', '2.39']],
         'permissions' => 'My',
         'priority'    => 150000,
         'type'        => 'plugin',
-        'support'     => 'https://github.com/JcDenis/' . $this->id . '/issues',
-        'details'     => 'https://github.com/JcDenis/' . $this->id . '/',
-        'repository'  => 'https://raw.githubusercontent.com/JcDenis/' . $this->id . '/master/dcstore.xml',
+        'support'     => 'https://github.com/JcDenis/' . $id . '/issues',
+        'details'     => 'https://github.com/JcDenis/' . $id . '/',
+        'repository'  => 'https://raw.githubusercontent.com/JcDenis/' . $id . '/master/dcstore.xml',
         'date'        => '2025-09-11T20:18:35+00:00',
     ]
 );

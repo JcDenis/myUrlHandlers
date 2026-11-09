@@ -29,7 +29,7 @@ or you can add dashboard icon.
 ## LINKS
 
 * [License](https://github.com/JcDenis/myUrlHandlers/blob/master/LICENSE)
-* [Packages & details](https://github.com/JcDenis/myUrlHandlers/releases) (or on [Repository](https://plugins.dotaddict.org/dc2/myUrlHandlers/alias))
+* [Packages & details](https://github.com/JcDenis/myUrlHandlers/releases) (or on [Repository](https://dotclear.org/plugin/detail/myUrlHandlers))
 * [Sources & contributions](https://github.com/JcDenis/myUrlHandlers)
 * [Issues & security](https://github.com/JcDenis/myUrlHandlers/issues)
 

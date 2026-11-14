@@ -23,7 +23,7 @@ $this->registerModule(
     'URL handlers',
     'Change Dotclear URL handlers',
     'Alex Pirine and contributors',
-    '2026.08.12',
+    '2026.11.14',
     [
         'requires'    => [['core', '2.39']],
         'permissions' => 'My',
@@ -32,6 +32,6 @@ $this->registerModule(
         'support'     => 'https://github.com/JcDenis/' . $this->id . '/issues',
         'details'     => 'https://github.com/JcDenis/' . $this->id . '/',
         'repository'  => 'https://raw.githubusercontent.com/JcDenis/' . $this->id . '/master/dcstore.xml',
-        'date'        => '2026-08-12T21:13:24+00:00',
+        'date'        => '2026-11-14T22:02:12+00:00',
     ]
 );

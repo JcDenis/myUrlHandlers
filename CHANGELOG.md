@@ -1,3 +1,11 @@
+myUrlHandlers 2026.11.14
+===========================================================
+* Replace Dotaddict links by Dotclear repository
+* [fix] URL cleanup kept accents and punctuation
+* [new] Confirm before resetting URLs
+* [docs] Add a user guide in French, with screenshots
+* [docs] Add the admin help in English and French
+
 myUrlHandlers 2026.08.12
 ===========================================================
 * Bump Dotclear from 2.36 to 2.39

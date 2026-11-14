@@ -26,6 +26,7 @@ Required Dotclear and PHP versions: see `_define.php`.
 * `src/Uninstall.php`: cleaners for the plugin Uninstaller.
 * `src/UrlDescriptor.php`: URL descriptor class.
 * `src/UrlStack.php`: URL descriptor stack class.
+* `js/`: `backend.js` (reset confirmation).
 * Behaviors used: `adminDashboardFavoritesV2`.
 
 ## Pitfalls

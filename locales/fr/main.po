@@ -10,7 +10,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgid "Uknown handler \"%s\"."
+msgid "Unknown handler \"%s\"."
 msgstr "Le gestionnaire \"%s\" n'existe pas."
 
 msgid "Invalid URL for handler \"%s\"."
@@ -37,3 +37,6 @@ msgstr "Vous pouvez écrire votre propre URL pour chaque gestionnaire de cette l
 msgid "URL handlers"
 msgstr "Gestionnaires d'URL"
 
+
+msgid "Are you sure you want to restore default URLs?"
+msgstr "Êtes-vous sûr de vouloir restaurer les URL par défaut ?"

@@ -38,5 +38,6 @@ or you can add dashboard icon.
 * Alex pirine (Author)
 * te2dy
 * Jean-Christian Denis (latest)
+* Claude (AI assistant by Anthropic)
 
 You are welcome to contribute to this code.

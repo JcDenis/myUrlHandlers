@@ -156,6 +156,8 @@ class Manage
             '</form>';
         }
 
+        Page::helpBlock(My::id() . '-index');
+
         Page::closeModule();
     }
 

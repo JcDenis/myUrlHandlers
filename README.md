@@ -12,6 +12,8 @@ _myUrlHandlers_ is a plugin for the open-source web publishing software called [
 
 > Change public URL of each Dotclear parts, like post, category, etc and some plugins having public parts.
 
+A [user guide in French](https://github.com/JcDenis/myUrlHandlers/blob/master/docs/fr/utilisation.md) is available.
+
 ## REQUIREMENTS
 
 * Dotclear 2.39
@@ -28,6 +30,7 @@ or you can add dashboard icon.
 
 ## LINKS
 
+* [User guide (in French)](https://github.com/JcDenis/myUrlHandlers/blob/master/docs/fr/utilisation.md)
 * [License](https://github.com/JcDenis/myUrlHandlers/blob/master/LICENSE)
 * [Packages & details](https://github.com/JcDenis/myUrlHandlers/releases) (or on [Repository](https://dotclear.org/plugin/detail/myUrlHandlers))
 * [Sources & contributions](https://github.com/JcDenis/myUrlHandlers)

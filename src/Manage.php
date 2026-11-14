@@ -41,11 +41,12 @@ class Manage
 
             if (!empty($_POST['handlers']) && is_array($_POST['handlers'])) {
                 foreach ($_POST['handlers'] as $name => $url) {
-                    $url = is_string($url) ? Text::tidyURL($url) : '';
+                    // Without accents nor punctuation, as for posts URLs
+                    $url = is_string($url) ? trim(Text::str2URL($url), '/') : '';
 
                     if (empty($handlers[$name])) {
                         throw new Exception(sprintf(
-                            __('Uknown handler "%s".'),
+                            __('Unknown handler "%s".'),
                             Html::escapeHTML((string) $name)
                         ));
                     }
@@ -103,7 +104,11 @@ class Manage
 
         $handlers = self::getHandlers();
 
-        Page::openModule(My::name());
+        Page::openModule(
+            My::name(),
+            Page::jsJson('myurlhandlers', ['confirm_reset' => __('Are you sure you want to restore default URLs?')]) .
+            My::jsLoad('backend')
+        );
 
         echo
         Page::breadcrumb(
